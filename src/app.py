@@ -140,8 +140,8 @@ X_con_outliers = total_data_con_outliers.drop("Outcome", axis = 1)
 X_sin_outliers = total_data_sin_outliers.drop("Outcome", axis = 1)
 y = total_data_con_outliers["Outcome"]
 
-X_train_con_outliers, X_test_con_outliers, y_train, y_test = train_test_split(X_con_outliers, y, test_size = 0.2, random_state = 42)
-X_train_sin_outliers, X_test_sin_outliers = train_test_split(X_sin_outliers, test_size = 0.2, random_state = 42)
+X_train_con_outliers, X_test_con_outliers, y_train, y_test = train_test_split(X_con_outliers, y, test_size = 0.2, random_state = 42, stratify=y)
+X_train_sin_outliers, X_test_sin_outliers = train_test_split(X_sin_outliers, test_size = 0.2, random_state = 42, stratify=y)
 
 X_train_con_outliers.to_excel("../data/processed/X_train_con_outliers.xlsx", index = False)
 X_train_sin_outliers.to_excel("../data/processed/X_train_sin_outliers.xlsx", index = False)
@@ -309,6 +309,7 @@ results.append(
 
 ## Guardado de modelo y resultados
 
-dump(model, open("../models/decision_tree_classifier_42.sav", "wb"))
+dump(model, open("../models/decision_tree_classifier_k5_sin_outliers_42.sav", "wb"))
+
 with open("../models/final_results.json", "w") as f:
     json.dump(results, f, indent=4)
